@@ -1,0 +1,27 @@
+{
+  "name": "palettizer",
+  "version": "0.1.0",
+  "description": "Creates Palette Files From a list of Hex Colour Codes",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JulianWebb/palettizer.git"
+  },
+  "keywords": [
+    "Palette"
+  ],
+  "author": "Julian Webb",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JulianWebb/palettizer/issues"
+  },
+  "homepage": "https://github.com/JulianWebb/palettizer#readme",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "express": "^4.17.1",
+    "jimp": "^0.16.1"
+  }
+}
