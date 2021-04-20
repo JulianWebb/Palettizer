@@ -1,7 +1,7 @@
 const fs = require('fs');
 const express = require('express');
 const axios = require('axios');
-const { request } = require('express');
+const { request, response } = require('express');
 
 module.exports = class {
     constructor(configuration, logger) {
@@ -17,13 +17,13 @@ module.exports = class {
         this.configuration.componentLocation = configuration?.componentLocation ?? "./components/";
         this.configuration.appPort = configuration?.port ?? 3456;
 
-        this.components = new Map();
+        this.components = {};
         logger.log("Loading Components");
         let components = fs.readdirSync(this.configuration.componentLocation);
         components.forEach((componentScript) => {
             if (!componentScript.endsWith(".component.js")) return;
             var component = require(this.configuration.componentLocation + componentScript);
-            this.components.set(component.name, component);
+            this.components[component.name] = component;
             logger.log(`Loading Component: ${component.name}`)
             this.app.post(`/${component.route}`, (request, response) => {
                 if (typeof request.body.colors != "object" && !Array.isArray(request.body.colours)) {
@@ -49,6 +49,15 @@ module.exports = class {
                 
             });
         });
+
+        this.app.get('/', (request, response) => {
+            let colorRoutes = {};
+            Object.entries(this.components).forEach((value, index) => {
+                colorRoutes[value[1].route] = value[1].name;
+            })
+            console.log(colorRoutes);
+            response.status(200).send(JSON.stringify(colorRoutes));
+        });        
     }
 
     listen(port) {
