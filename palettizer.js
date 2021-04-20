@@ -33,7 +33,6 @@ module.exports = class {
                     });
                 }
                 let fileName = `${request.body.name ?? "palette"}.${component.fileExtension}"`;
-                console.log(request.body);
                 let generatedPalette = component.generate(request.body);
                 if (generatedPalette.error) {
                     response.status(400).json({
@@ -55,7 +54,6 @@ module.exports = class {
             Object.entries(this.components).forEach((value, index) => {
                 colorRoutes[value[1].route] = value[1].name;
             })
-            console.log(colorRoutes);
             response.status(200).send(JSON.stringify(colorRoutes));
         });        
     }
