@@ -1,7 +1,5 @@
 const fs = require('fs');
 const express = require('express');
-const axios = require('axios');
-const { request, response } = require('express');
 
 module.exports = class {
     constructor(configuration, logger) {
@@ -14,8 +12,8 @@ module.exports = class {
         this.app = new express();
         this.app.use(express.json());
         this.configuration = {};
-        this.configuration.componentLocation = configuration?.componentLocation ?? "./components/";
-        this.configuration.appPort = configuration?.port ?? 3456;
+        this.configuration.componentLocation = __dirname + "/components/";
+        this.configuration.appPort = process.env.APP_PORT
 
         this.components = {};
         logger.log("Loading Components");
